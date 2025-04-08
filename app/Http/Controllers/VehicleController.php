@@ -2,64 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use App\Models\Vehicle;
 
 class VehicleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Show the vehicle details form
     public function index()
     {
-        //
+        return view('vehical_Details');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Store vehicle data
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'vehicle_type' => 'required|string',
+            'other_vehicle_type' => 'nullable|string',
+            'vehicle_model' => 'required|string',
+            'other_model' => 'nullable|string',
+            'year_manufacture' => 'required|integer',
+            'year_registration' => 'required|integer',
+            'assign_date' => 'required|date',
+            'vehicle_number' => 'required|string|unique:vehicle_Details',
+            'fuel_type' => 'required|string',
+            'engine_capacity' => 'required|integer',
+            'revenue_license_year' => 'required|integer',
+            'security_capacity' => 'required|integer',
+        ]);
+
+        Vehicle::create($validated);
+
+        return redirect()->route('vehical_Details')->with('success', 'Vehicle saved successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Vehicle $vehicle)
+  
+    public function view()
     {
-        //
+        $vehicles = Vehicle::all(); // Fetch all vehicles
+        return view('vehical_veiw', compact('vehicles')); // Make sure this matches your file name
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Vehicle $vehicle)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Vehicle $vehicle)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Vehicle $vehicle)
-    {
-        //
-    }
+    
 }
+
+

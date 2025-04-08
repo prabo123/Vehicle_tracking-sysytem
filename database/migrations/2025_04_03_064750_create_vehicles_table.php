@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateVehiclesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,17 @@ return new class extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('vehicle_type');
+            $table->string('vehicle_model');
+            $table->integer('year_manufacture');
+            $table->integer('year_registration');
+            $table->date('assign_date');
+            $table->string('vehicle_number')->unique();
+            $table->string('fuel_type');
+            $table->integer('engine_capacity');
+            $table->integer('revenue_license_year');
+            $table->integer('security_capacity');
+            $table->timestamps(); // created_at & updated_at
         });
     }
 
@@ -24,4 +34,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('vehicles');
     }
-};
+}
