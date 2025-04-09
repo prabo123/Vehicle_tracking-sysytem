@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');                     // Full Name
+            $table->string('nic');
+            $table->string('other_id')->nullable();
+            $table->string('license_no');
+            $table->string('address');
+            $table->string('mobile');
+            $table->string('home_phone')->nullable();
+            $table->string('passport')->nullable();
+            $table->string('medical_category')->nullable();
+            $table->text('driving_categories')->nullable();
             $table->timestamps();
         });
     }
@@ -25,3 +35,4 @@ return new class extends Migration
         Schema::dropIfExists('drivers');
     }
 };
+

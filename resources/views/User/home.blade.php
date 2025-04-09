@@ -79,10 +79,10 @@
             <input type="text" name="search" class="form-control" placeholder="Search">
             <button type="submit" class="btn btn-light"><i class="bi bi-search text-white"></i></button>
         </form>
-        <ul class="nav">
-            <li class="nav-item"><a class="nav-link" href="#">SignUp</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-        </ul>
+<ul class="nav">
+    <li class="nav-item"><a class="nav-link" href="{{ route('signup.page') }}">SignUp</a></li>
+</ul>
+
     </div>
 </div>
 

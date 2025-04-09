@@ -112,14 +112,16 @@
         <span class="nav_name">View Details ▼</span>
     </a>
     <div class="collapse {{ Request::is('vehicle/view') || Request::is('driver/view') ? 'show' : '' }}" id="viewDetailsSubmenu">
-        <a href="{{ route('vehicle.view') }}" class="nav_link {{ Request::is('vehicle/view') ? 'active fw-bold text-white' : '' }}">
+        <a href="{{ route('vehicle.view') }}" class="vehical_Details.blade.php {{ Request::is('vehicle/view') ? 'active fw-bold text-white' : '' }}">
             <i class="bi bi-truck nav_icon"></i>
             <span class="nav_name">Vehicle View</span>
         </a>
-        <a href="{{ route('driver.view') }}" class="nav_link {{ Request::is('driver/view') ? 'active fw-bold text-white' : '' }}">
-            <i class="bi bi-person-badge nav_icon"></i>
-            <span class="nav_name">Driver View</span>
-        </a>
+
+    <!-- Driver View -->
+    <a href="{{ route('driver.view') }}" class="driver_veiw.blade.php {{ Request::is('driver/view') ? 'active fw-bold text-white' : '' }}">
+        <i class="bi bi-person-badge nav_icon"></i>
+        <span class="nav_name">Driver View</span>
+    </a>  
     </div>
 
     <!-- Settings -->
@@ -134,6 +136,10 @@
         <span class="nav_name">Logout</span>
     </a>
 </div>
+
+
+
+
 
 </body>
 </html>
