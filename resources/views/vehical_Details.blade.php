@@ -76,6 +76,11 @@
                     $currentYear = date('Y');
                     $startYear = 1945;
                 @endphp
+                <form action="{{ isset($vehicle) ? route('vehical.update', $vehicle->id) : route('vehical_Details') }}" method="POST">
+                    @csrf
+                    @if(isset($vehicle))
+                        @method('PUT')
+                    @endif
 
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -122,7 +127,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="year_registration" class="form-label fw-bold"><span class="text-danger">*</span></label>
+                        <label for="year_registration" class="form-label fw-bold">Year of Manufacture <span class="text-danger">*</span></label>
                         <select class="form-select" id="year_registration" name="year_registration" required>
                             <option value="">Select Year</option>
                             @for ($year = $currentYear; $year >= $startYear; $year--)
@@ -175,15 +180,12 @@
         <!-- Buttons -->
             <div class="text-start">
                 <button type="submit" class="btn text-white me-2" style="background-color: rgb(10, 44, 139);">Save</button>
-                <button type="button" class="btn text-white" style="background-color: rgb(10, 139, 32);">Edit</button>
-                <button type="button" class="btn text-white" style="background-color: rgb(196, 13, 13);">Delete</button>
             </div>
             </form>
         </div>
     </div>
 </div>
 
-@include('layouts.userfooter')
 
 <!-- Bootstrap & Validation Script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -238,6 +240,10 @@
         });
     });
 </script>
+
+
+ <!-- Footer -->
+ @include('layouts.userfooter')
 
 </body>
 </html>

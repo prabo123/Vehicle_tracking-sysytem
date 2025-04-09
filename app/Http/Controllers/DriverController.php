@@ -13,7 +13,7 @@ class DriverController extends Controller
     public function index()
     {
         $drivers = Driver::all();
-        return view('driver.index', compact('drivers'));
+        return view('driver_veiw', compact('drivers'));
     }
 
     /**
@@ -21,7 +21,8 @@ class DriverController extends Controller
      */
     public function create()
     {
-        return view('driver_Details');
+        $drivers = Driver::all(); // Optional: remove this if not used in the form
+        return view('driver_Details', compact('drivers'));
     }
 
     /**
@@ -43,7 +44,6 @@ class DriverController extends Controller
             'driving_categories.*' => 'string|in:High Vehicle,Heavy Vehicle,Three Vehicle',
         ]);
 
-        // Convert driving categories to a string for storage
         $validated['driving_categories'] = isset($validated['driving_categories'])
             ? implode(', ', $validated['driving_categories'])
             : null;
@@ -98,3 +98,4 @@ class DriverController extends Controller
         return redirect()->back()->with('success', 'Driver deleted successfully!');
     }
 }
+

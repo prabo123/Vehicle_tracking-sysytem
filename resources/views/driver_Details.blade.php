@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -139,8 +142,6 @@
                 <!-- Buttons -->
                 <div class="text-start">
                     <button type="submit" class="btn text-white me-2" style="background-color: rgb(10, 44, 139);">Save</button>
-                    <button type="button" class="btn text-white me-2" style="background-color: rgb(10, 139, 32);">Edit</button>
-                    <button type="button" class="btn text-white" style="background-color: rgb(196, 13, 13);">Delete</button>
                 </div>
 
             </form>
@@ -149,6 +150,11 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!--footer-->
 @include('layouts.userfooter')
+
+
+
 </body>
 </html>

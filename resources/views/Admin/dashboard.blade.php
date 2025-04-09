@@ -4,20 +4,34 @@
     <meta charset="UTF-8">
     <title>Fuel Tracking System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .main-content {
+            margin-left: 220px;
+            padding: 80px 20px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding-top: 100px;
+            }
+        }
+    </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
 <!-- Sidebar -->
 @include('layouts.slidebar')
 
-<!-- Navbar (after sidebar) -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
     <div class="container-fluid justify-content-end">
         <ul class="navbar-nav">
@@ -35,7 +49,7 @@
 </nav>
 
 <!-- Main Content -->
-<div class="main-content">
+<div class="main-content flex-grow-1">
     <h2 class="mb-4">Welcome to the Admin Dashboard</h2>
 
     <div class="row mb-4">
@@ -54,7 +68,9 @@
     </div>
 
     <h4 class="mt-5">Vehicle Types Distribution</h4>
-    <canvas id="vehiclePieChart" height="120"></canvas>
+    <div class="card p-3" style="width: 400px;">
+        <canvas id="vehiclePieChart" width="300" height="300" style="max-width: 100%; height: auto;"></canvas>
+    </div>
 </div>
 
 <!-- Chart Script -->
@@ -68,23 +84,39 @@
                 label: 'Vehicle Types',
                 data: {!! json_encode($vehicleTypes->values()) !!},
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(153, 102, 255, 0.7)',
-                    'rgba(255, 159, 64, 0.7)',
-                    'rgba(99, 255, 132, 0.7)'
+                    'rgba(233, 13, 61, 0.8)',     // Red
+                    'rgba(12, 241, 241, 0.8)',     // Green
+                    'rgba(10, 86, 136, 0.8)',     // Blue
+                    'rgba(77, 183, 77, 0.8)',     // Pink
+                    'rgba(244, 164, 5, 0.97)',     // Yellow
+                    'rgba(244, 127, 10, 0.8)',     // Orange
+                    'rgba(146, 9, 244, 0.8)'      // Purple
                 ],
                 borderColor: '#fff',
                 borderWidth: 2
             }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#000',
+                        font: {
+                            size: 12
+                        }
+                    }
+                }
+            }
         }
     });
 </script>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Footer -->
+@include('layouts.userfooter')
 
 </body>
 </html>
