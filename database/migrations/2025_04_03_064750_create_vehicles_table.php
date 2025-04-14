@@ -6,15 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateVehiclesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->string('vehicle_type');
-            $table->string('vehicle_model');
+            $table->string('other_vehicle_type')->nullable();
+            $table->string('vehicle_model')->nullable();
+            $table->string('other_model')->nullable();
             $table->integer('year_manufacture');
             $table->integer('year_registration');
             $table->date('assign_date');
@@ -23,14 +22,11 @@ class CreateVehiclesTable extends Migration
             $table->integer('engine_capacity');
             $table->integer('revenue_license_year');
             $table->integer('security_capacity');
-            $table->timestamps(); // created_at & updated_at
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('vehicles');
     }

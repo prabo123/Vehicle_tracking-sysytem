@@ -24,7 +24,12 @@
                 padding-top: 100px;
             }
         }
+        h2.mb-4 {
+            font-size: 24px;
+            font-weight: bold;
+        }
     </style>
+   
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -67,11 +72,34 @@
         </div>
     </div>
 
-    <h4 class="mt-5">Vehicle Types Distribution</h4>
-    <div class="card p-3" style="width: 400px;">
-        <canvas id="vehiclePieChart" width="300" height="300" style="max-width: 100%; height: auto;"></canvas>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h4 class="mb-3">Vehicle Types Distribution</h4>
+        <div class="card p-3">
+            <canvas id="vehiclePieChart" width="300" height="300" style="max-width: 100%; height: auto;"></canvas>
+        </div>
+    </div>
+
+    <div class="col-md-6 d-flex align-items-center justify-content-center">
+        <div class="card bg-primary text-white p-4 text-center w-100">
+            
+        <div id="customCalendar" class="text-center">
+    <h5 id="calendarMonth"></h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr class="bg-secondary text-white">
+                <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th>
+                <th>Thu</th><th>Fri</th><th>Sat</th>
+            </tr>
+        </thead>
+        <tbody id="calendarBody"></tbody>
+    </table>
+</div>
+        </div>
     </div>
 </div>
+
+    
 
 <!-- Chart Script -->
 <script>
@@ -111,6 +139,59 @@
         }
     });
 </script>
+
+<script>
+   const highlightDates = {!! json_encode($events) !!}; 
+   //
+    
+    const renderCalendar = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth(); // 0-indexed
+
+        const startDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        const calendarBody = document.getElementById("calendarBody");
+        const calendarMonth = document.getElementById("calendarMonth");
+        calendarBody.innerHTML = "";
+        calendarMonth.textContent = today.toLocaleString('default', { month: 'long' }) + " " + year;
+
+        let date = 1;
+        for (let i = 0; i < 6; i++) {
+            let row = document.createElement("tr");
+
+            for (let j = 0; j < 7; j++) {
+                let cell = document.createElement("td");
+
+                if (i === 0 && j < startDay) {
+                    cell.innerHTML = "";
+                } else if (date > daysInMonth) {
+                    break;
+                } else {
+                    const currentDate = `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+                    cell.innerText = date;
+
+                    if (highlightDates.includes(currentDate)) {
+                        cell.style.backgroundColor = "#c5f02f";
+                        cell.style.borderRadius = "50%";
+                        cell.style.fontWeight = "bold";
+                    }
+
+                    date++;
+                }
+
+                row.appendChild(cell);
+            }
+
+            calendarBody.appendChild(row);
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", renderCalendar);
+</script>
+
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

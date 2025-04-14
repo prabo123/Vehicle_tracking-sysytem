@@ -1,25 +1,21 @@
 <?php
+use App\Models\Event;
+use Carbon\Carbon;
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Models\Vehicle;
-use App\Models\Driver;
-
-class DashboardController extends Controller
+public function index()
 {
-    public function index()
-    {
-        // Total counts
-        $totalVehicles = Vehicle::count();
-        $totalDrivers = Driver::count(); // Assuming you have a Driver model
+    $totalVehicles = Vehicle::count();
+    $totalDrivers = Driver::count();
 
-        // Pie chart data: count of each vehicle type
-        $vehicleTypes = Vehicle::selectRaw('vehicle_type, COUNT(*) as count')
-            ->groupBy('vehicle_type')
-            ->pluck('count', 'vehicle_type');
+    $vehicleTypes = Vehicle::select('vehicle_type')
+        ->get()
+        ->groupBy('vehicle_type')
+        ->map->count();
 
-        return view('dashboard', compact('totalVehicles', 'totalDrivers', 'vehicleTypes'));
-        
-    }
+    // Get all event dates
+    $events = Event::pluck('event_date')->map(function ($date) {
+        return Carbon::parse($date)->format('Y-m-d');
+    });
+
+    return view('dashboard', compact('totalVehicles', 'totalDrivers', 'vehicleTypes', 'events'));
 }

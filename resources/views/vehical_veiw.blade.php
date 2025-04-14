@@ -70,6 +70,7 @@
                 <th>Engine Capacity</th>
                 <th>Revenue License Year</th>
                 <th>Seats</th>
+                <th>veiw</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -89,16 +90,38 @@
                 <td>{{ $vehicle->revenue_license_year }}</td>
                 <td>{{ $vehicle->security_capacity }}</td>
                 
-            <td>
-                <div class="d-grid gap-2">
-                    <a href="{{ route('vehical.edit', $vehicle->id) }}" class="btn btn-sm btn-primary">Edit</a>    <td>
-                    <form action="{{ route('vehical.update', $vehicle->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>    </td>
-                    </form>
-                </div>
-            </td>
+               
+
+
+                <td>
+    <div class="d-grid gap-2 d-md-block">
+        <!-- View Button -->
+        <a href="{{ route('vehicle.show', $vehicle->id) }}" class="btn btn-sm btn-success">View</a>
+    </div>
+</td>
+
+
+
+     
+    <td>
+    <div class="d-grid gap-2 d-md-block">
+        <!-- Edit Button -->
+        <a href="{{ route('vehical.edit', $vehicle->id) }}" class="btn btn-sm btn-primary">Edit</a>
+    </td>
+
+
+    <td>
+        <!-- Delete Button -->
+        <form action="{{ route('vehical.destroy', $vehicle->id) }}" method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this vehicle?')">Delete</button>
+        </form>
+
+        <td>
+    </div>
+</td>
+
 
             </tr>
             @empty

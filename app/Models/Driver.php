@@ -21,4 +21,5 @@ class Driver extends Model
         'medical_category',
         'driving_categories',
     ];
+    
 }
