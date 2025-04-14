@@ -7,95 +7,68 @@ use App\Models\Driver;
 
 class DriverController extends Controller
 {
-    /**
-     * Display a listing of the drivers.
-     */
-    public function index()
-    {
-        $drivers = Driver::all();
-        return view('driver_veiw', compact('drivers'));
-    }
-
-    /**
-     * Show the form for creating a new driver.
-     */
+    // Show the driver details form
     public function create()
     {
-        $drivers = Driver::all(); // Optional: remove this if not used in the form
-        return view('driver_Details', compact('drivers'));
+        return view('driver_Details'); // resources/views/driver/create.blade.php
     }
 
-    /**
-     * Store a newly created driver in storage.
-     */
+    // Store driver data
+
+    
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'nic' => 'required|string|max:20',
-            'other_id' => 'nullable|string|max:50',
-            'license_no' => 'required|string|max:50',
-            'address' => 'required|string|max:255',
-            'mobile' => 'required|string|max:15',
-            'home_phone' => 'nullable|string|max:15',
-            'passport' => 'nullable|string|max:50',
-            'medical_category' => 'nullable|string|max:100',
-            'driving_categories' => 'nullable|array',
-            'driving_categories.*' => 'string|in:High Vehicle,Heavy Vehicle,Three Vehicle',
+            'nic' => 'required|string|max:12|unique:drivers',
+            'license_number' => 'required|string|max:50',
+            'mobile_number' => 'required|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'home_number' => 'nullable|string|max:15',
+            'passport_number' => 'nullable|string|max:20',
+            'medical_category' => 'nullable|string|max:50',
+            'driving_categories' => 'nullable|string|max:255', // could be comma-separated list
         ]);
-
-        $validated['driving_categories'] = isset($validated['driving_categories'])
-            ? implode(', ', $validated['driving_categories'])
-            : null;
 
         Driver::create($validated);
 
-        return redirect()->back()->with('success', 'Driver details saved successfully!');
+        return redirect()->route('driver.view')->with('success', 'Driver saved successfully!');
     }
 
-    /**
-     * Show the form for editing the specified driver.
-     */
-    public function edit(Driver $driver)
-    {
-        return view('driver.edit', compact('driver'));
-    }
+    // View all drivers
+    public function view()
+{
+    $drivers = Driver::all();
+    return view('driver_veiw', compact('drivers'));
+}
 
-    /**
-     * Update the specified driver in storage.
-     */
-    public function update(Request $request, Driver $driver)
+    
+
+    // Update driver data
+    public function update(Request $request, $id)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'nic' => 'required|string|max:20',
-            'other_id' => 'nullable|string|max:50',
-            'license_no' => 'required|string|max:50',
-            'address' => 'required|string|max:255',
-            'mobile' => 'required|string|max:15',
-            'home_phone' => 'nullable|string|max:15',
-            'passport' => 'nullable|string|max:50',
-            'medical_category' => 'nullable|string|max:100',
-            'driving_categories' => 'nullable|array',
-            'driving_categories.*' => 'string|in:High Vehicle,Heavy Vehicle,Three Vehicle',
+            'nic' => 'required|string|max:12',
+            'license_number' => 'required|string|max:50',
+            'mobile_number' => 'required|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'home_number' => 'nullable|string|max:15',
+            'passport_number' => 'nullable|string|max:20',
+            'medical_category' => 'nullable|string|max:50',
+            'driving_categories' => 'nullable|string|max:255',
         ]);
 
-        $validated['driving_categories'] = isset($validated['driving_categories'])
-            ? implode(', ', $validated['driving_categories'])
-            : null;
-
+        $driver = Driver::findOrFail($id);
         $driver->update($validated);
 
-        return redirect()->back()->with('success', 'Driver updated successfully!');
+        return redirect()->route('driver.view')->with('success', 'Driver updated successfully!');
     }
 
-    /**
-     * Remove the specified driver from storage.
-     */
-    public function destroy(Driver $driver)
+    // Show single driver details
+    public function show($id)
     {
-        $driver->delete();
-        return redirect()->back()->with('success', 'Driver deleted successfully!');
+        $driver = Driver::findOrFail($id);
+        return view('driver.show', compact('driver')); // resources/views/driver/show.blade.php
     }
 }
-

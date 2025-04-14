@@ -3,22 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Vehicle;
+use App\Models\Driver;
+use App\Models\Event;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        // Dummy data for testing
-        $totalVehicles = 10;
-        $totalDrivers = 5;
-        $vehicleTypes = collect([
-            'Car' => 4,
-            'Van' => 2,
-            'Truck' => 3,
-            'Bus' => 1
-        ]);
+        // Count vehicles and drivers
+        $totalVehicles = Vehicle::count();
+        $totalDrivers = Driver::count();
 
-        return view('Admin.dashboard', compact('totalVehicles', 'totalDrivers', 'vehicleTypes'));
+        // Get vehicle types count grouped
+        $vehicleTypes = Vehicle::select('vehicle_type')
+            ->get()
+            ->groupBy('vehicle_type')
+            ->map->count();
+
+        // Fetch all event dates as array of strings for the calendar
+        $events = Event::pluck('event_date')->toArray();
+
+        // Pass everything to the view
+        return view('Admin.dashboard', compact('totalVehicles', 'totalDrivers', 'vehicleTypes', 'events'));
     }
 }
 

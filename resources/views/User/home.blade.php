@@ -79,22 +79,26 @@
             <input type="text" name="search" class="form-control" placeholder="Search">
             <button type="submit" class="btn btn-light"><i class="bi bi-search text-white"></i></button>
         </form>
+ 
+
 <ul class="nav">
     <li class="nav-item"><a class="nav-link" href="{{ route('signup.page') }}">SignUp</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ route('User_login.showLogin') }}">Login</a></li>
 </ul>
+
+
 
     </div>
 </div>
 
 <!-- Navigation Bar -->
-<nav class="nav-bar">
+<nav class="nav-bar"> 
     <div class="container d-flex justify-content-between">
         <ul class="nav">
             <li class="nav-item"><a class="" href="#">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Driver</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Vehical</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-        
         </ul>
     </div>
 </nav>

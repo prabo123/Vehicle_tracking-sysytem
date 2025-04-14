@@ -1,99 +1,128 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Vehicle Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-@section('content')
-<div class="main-content">
-    <div class="card-header bg-light"><h3>Edit Vehicle Details</h3></div>
-    <br>
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
 
-    <!-- SweetAlert Messages -->
-    @if(session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: '{{ session("success") }}',
-                timer: 3000,
-                confirmButtonColor: '#3085d6'
-            });
-        </script>
-    @endif
+@include('layouts.slidebar')
 
-    @if($errors->any())
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Validation Error',
-                html: `{!! implode('<br>', $errors->all()) !!}`,
-                confirmButtonColor: '#d33'
-            });
-        </script>
-    @endif
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
+    <div class="container-fluid justify-content-end">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Welcome User
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-    <div class="card p-4">
-        <form action="{{ route('vehical.update', $vehicle->id) }}" method="POST">
-            @csrf
-            @method('PATCH')
+<div class="main-content container mt-5 pt-5">
+    <div class="card">
+        <div class="card-header bg-light">
+            <h3 class="mb-0">Edit Vehicle</h3>
+        </div>
+        <div class="card-body">
 
-            <div class="mb-3">
-                <label class="form-label">Vehicle Number</label>
-                <input type="text" name="vehicle_number" class="form-control @error('vehicle_number') is-invalid @enderror" value="{{ old('vehicle_number', $vehicle->vehicle_number) }}" required>
-                @error('vehicle_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+            <form action="{{ route('vehical.update', $vehicle->id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-            <div class="mb-3">
-                <label class="form-label">Vehicle Type</label>
-                <input type="text" name="vehicle_type" class="form-control @error('vehicle_type') is-invalid @enderror" value="{{ old('vehicle_type', $vehicle->vehicle_type) }}" required>
-                @error('vehicle_type') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Vehicle Model</label>
-                <input type="text" name="vehicle_model" class="form-control" value="{{ old('vehicle_model', $vehicle->vehicle_model) }}">
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="form-label">Year of Manufacture</label>
-                    <input type="number" name="year_manufacture" class="form-control" value="{{ old('year_manufacture', $vehicle->year_manufacture) }}">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Vehicle Type</label>
+                        <input type="text" class="form-control" name="vehicle_type" value="{{ $vehicle->vehicle_type }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Other Vehicle Type</label>
+                        <input type="text" class="form-control" name="other_vehicle_type" value="{{ $vehicle->other_vehicle_type }}">
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label">Year of Registration</label>
-                    <input type="number" name="year_registration" class="form-control" value="{{ old('year_registration', $vehicle->year_registration) }}">
-                </div>
-            </div><br>
 
-            <div class="mb-3">
-                <label class="form-label">Assign Date</label>
-                <input type="date" name="assign_date" class="form-control" value="{{ old('assign_date', $vehicle->assign_date) }}">
-            </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Vehicle Model</label>
+                        <input type="text" class="form-control" name="vehicle_model" value="{{ $vehicle->vehicle_model }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Other Model</label>
+                        <input type="text" class="form-control" name="other_model" value="{{ $vehicle->other_model }}">
+                    </div>
+                </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="form-label">Fuel Type</label>
-                    <input type="text" name="fuel_type" class="form-control" value="{{ old('fuel_type', $vehicle->fuel_type) }}">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Year of Manufacture</label>
+                        <input type="number" class="form-control" name="year_manufacture" value="{{ $vehicle->year_manufacture }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Year of Registration</label>
+                        <input type="number" class="form-control" name="year_registration" value="{{ $vehicle->year_registration }}" required>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label">Engine Capacity</label>
-                    <input type="number" name="engine_capacity" class="form-control" value="{{ old('engine_capacity', $vehicle->engine_capacity) }}">
-                </div>
-            </div><br>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="form-label">Revenue License Year</label>
-                    <input type="number" name="revenue_license_year" class="form-control" value="{{ old('revenue_license_year', $vehicle->revenue_license_year) }}">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Assign Date</label>
+                        <input type="date" class="form-control" name="assign_date" value="{{ $vehicle->assign_date }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Vehicle Number</label>
+                        <input type="text" class="form-control" name="vehicle_number" value="{{ $vehicle->vehicle_number }}" required>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label">Seats Capacity</label>
-                    <input type="number" name="security_capacity" class="form-control" value="{{ old('security_capacity', $vehicle->security_capacity) }}">
-                </div>
-            </div><br>
 
-            <div class="d-flex justify-content-start gap-2">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('vehicle.view') }}" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Fuel Type</label>
+                        <input type="text" class="form-control" name="fuel_type" value="{{ $vehicle->fuel_type }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Engine Capacity (cc)</label>
+                        <input type="number" class="form-control" name="engine_capacity" value="{{ $vehicle->engine_capacity }}" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Revenue License Year</label>
+                        <input type="number" class="form-control" name="revenue_license_year" value="{{ $vehicle->revenue_license_year }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Seats</label>
+                        <input type="number" class="form-control" name="security_capacity" value="{{ $vehicle->security_capacity }}" required>
+                    </div>
+                </div>
+
+                <div class="text-start">
+                    <button type="submit" class="btn btn-success">Update Vehicle</button>
+                    <a href="{{ route('vehicle.view') }}" class="btn btn-secondary">Cancel</a>
+                </div>
+
+            </form>
+
+        </div>
     </div>
 </div>
-@endsection
+
+@include('layouts.userfooter')
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+

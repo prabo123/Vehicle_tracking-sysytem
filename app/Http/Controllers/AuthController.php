@@ -10,21 +10,23 @@ class AuthController extends Controller
     public function showLogin()
     {
         return view('User_login');
+         // Make sure file path is correct
     }
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
+        $request->validate([
+            'email'    => 'required|email',
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard'); // or your homepage
+            return redirect('/dashboard'); // Redirect to wherever you want
         }
 
         return back()->with('error', 'Invalid credentials');
     }
-}
 
+
+}

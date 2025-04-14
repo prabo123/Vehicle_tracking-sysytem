@@ -1,18 +1,24 @@
 <?php
-use App\Http\Controllers\UserController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CalendarController;
+
 
 // Admin
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
 
 // User Home
 Route::get('/user/home', function () {
     return view('User.home');
 })->name('user.home');
+
+
 
 //------------------ Vehicle Routes------------------
 
@@ -25,18 +31,14 @@ Route::post('/vehical_Details', [VehicleController::class, 'store']);
 // View all vehicles
 Route::get('/vehicle/view', [VehicleController::class, 'view'])->name('vehicle.view');
 
-// Edit form
-Route::get('/vehical/{id}/edit', [VehicleController::class, 'edit'])->name('vehical.edit');
+Route::get('/vehicle-show/{id}', [VehicleController::class, 'show'])->name('vehicle.show');
+
 
 // Update vehicle
 Route::put('/vehical/{id}', [VehicleController::class, 'update'])->name('vehical.update');
-
-
-
-
-
-
-
+Route::get('/vehicle/edit/{id}', [VehicleController::class, 'edit'])->name('vehical.edit');
+Route::put('/vehicle/update/{id}', [VehicleController::class, 'update'])->name('vehical.update');
+Route::delete('/vehicle/delete/{id}', [VehicleController::class, 'destroy'])->name('vehical.destroy');
 
 
 
@@ -58,6 +60,11 @@ Route::put('/driver/{driver}', [DriverController::class, 'update'])->name('drive
 // Delete driver
 Route::delete('/driver/{driver}', [DriverController::class, 'destroy'])->name('driver.destroy');
 
+// Driver View Route
+Route::get('/driver/view', [DriverController::class, 'view'])->name('driver.view');
+
+
+
 
 
 //-------------- User Signup-------------------------
@@ -67,11 +74,20 @@ Route::get('/User_signup', [UserController::class, 'create'])->name('signup.page
 return view('User_signup');
 
 
+//-------------- User Login-------------------------
 
 
-//-------------- User Login -------------------------
-Route::get('/User_login', [AuthController::class, 'showLogin'])->name('login.page');
-Route::post('/User_login', [AuthController::class, 'login'])->name('login.user');
+// Show the login form
+Route::get('/User_login', [AuthController::class, 'showLogin'])->name('User_login.showLogin');
+
+// Handle the login submission
+Route::post('/User_login', [AuthController::class, 'login'])->name('login.submit');
+
+Route::get('/user/home', function () {
+    return view('User.home');
+})->middleware('auth');
+
+
 
 
 

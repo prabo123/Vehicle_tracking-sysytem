@@ -85,44 +85,47 @@
     </div>
 
     <!-- Dashboard -->
-    <a href="{{ url('admin/dashboard') }}" class="nav_link {{ Request::is('admin/dashboard') ? 'active fw-bold text-white' : '' }}">
-        <i class="bi bi-house-door nav_icon"></i>
-        <span class="nav_name">Dashboard</span>
-    </a>
+                    <a href="{{ url('admin/dashboard') }}" class="nav_link {{ Request::is('admin/dashboard') ? 'active fw-bold text-white' : '' }}">
+                        <i class="bi bi-house-door nav_icon"></i>
+                        <span class="nav_name">Dashboard</span>
+                    </a>
 
     <!-- Add Details Dropdown (Collapse Menu) -->
-    <a href="#addDetailsSubmenu" class="nav_link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="addDetailsSubmenu">
-        <i class="bi bi-truck-front nav_icon"></i>
-        <span class="nav_name">Add Details ▼</span>
-    </a>
-    <div class="collapse {{ Request::is('vehical_Details') || Request::is('driver_Details') ? 'show' : '' }}" id="addDetailsSubmenu">
-        <a href="{{ route('vehical_Details') }}" class="nav_link {{ Request::is('vehical_Details') ? 'active fw-bold text-white' : '' }}">
-            <i class="bi bi-truck nav_icon"></i>
-            <span class="nav_name">Vehicle Details</span>
-        </a>
-        <a href="{{ route('driver_Details') }}" class="nav_link {{ Request::is('driver_Details') ? 'active fw-bold text-white' : '' }}">
-            <i class="bi bi-person-badge nav_icon"></i>
-            <span class="nav_name">Driver Details</span>
-        </a>
-    </div>
+                    <a href="#addDetailsSubmenu" class="nav_link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="addDetailsSubmenu">
+                        <i class="bi bi-truck-front nav_icon"></i>
+                        <span class="nav_name">Add Details ▼</span>
+                    </a>
+                    <div class="collapse {{ Request::is('vehical_Details') || Request::is('driver_Details') ? 'show' : '' }}" id="addDetailsSubmenu">
+                        <a href="{{ route('vehical_Details') }}" class="nav_link {{ Request::is('vehical_Details') ? 'active fw-bold text-white' : '' }}">
+                            <i class="bi bi-truck nav_icon"></i>
+                            <span class="nav_name"> Vehicle Details</span>
+                        </a>
+                        <a href="{{ route('driver_Details') }}" class="nav_link {{ Request::is('driver_Details') ? 'active fw-bold text-white' : '' }}">
+                            <i class="bi bi-person-badge nav_icon"></i>
+                            <span class="nav_name"> Driver Details</span>
+                        </a>
+                    </div>
 
-    <!-- View Details Dropdown (Collapse Menu) -->
-    <a href="#viewDetailsSubmenu" class="nav_link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="viewDetailsSubmenu">
-        <i class="bi bi-eye nav_icon"></i>
-        <span class="nav_name">View Details ▼</span>
-    </a>
-    <div class="collapse {{ Request::is('vehicle/view') || Request::is('driver/view') ? 'show' : '' }}" id="viewDetailsSubmenu">
-        <a href="{{ route('vehicle.view') }}" class="vehical_Details.blade.php {{ Request::is('vehicle/view') ? 'active fw-bold text-white' : '' }}">
-            <i class="bi bi-truck nav_icon"></i>
-            <span class="nav_name">Vehicle View</span>
-        </a>
+   <!-- View Details Dropdown (Collapse Menu) -->
+                <a href="#viewDetailsSubmenu" class="nav_link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="viewDetailsSubmenu">
+                    <i class="bi bi-eye nav_icon"></i>
+                    <span class="nav_name">View Details ▼</span>
+                </a>
+                <div class="collapse {{ Request::is('vehicle/view') || Request::is('driver/view') ? 'show' : '' }}" id="viewDetailsSubmenu">
 
-    <!-- Driver View -->
-    <a href="{{ route('driver.view') }}" class="driver_veiw.blade.php {{ Request::is('driver/view') ? 'active fw-bold text-white' : '' }}">
-        <i class="bi bi-person-badge nav_icon"></i>
-        <span class="nav_name">Driver View</span>
-    </a>  
-    </div>
+                    <!-- Vehicle View Link -->
+                    <a href="{{ route('vehicle.view') }}" class="nav_link {{ Request::is('vehicle/view') ? 'active fw-bold text-white' : '' }}">
+                        <i class="bi bi-truck nav_icon"></i>
+                        <span class="nav_name">Vehicle View</span>
+                    </a>
+
+                    <!-- Driver View Link -->
+                    <a href="{{ route('driver.view') }}" class="nav_link {{ Request::is('driver/view') ? 'active fw-bold text-white' : '' }}">
+                        <i class="bi bi-person-badge nav_icon"></i>
+                        <span class="nav_name">Driver View</span>
+                    </a>
+                </div>
+
 
     <!-- Settings -->
     <a href="#" class="nav_link">

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,7 +10,7 @@ class VehicleController extends Controller
     // Show the vehicle details form
     public function index()
     {
-        return view('vehical_Details');
+        return view('vehical_Details'); // points to resources/views/User/vehical_Details.blade.php
     }
 
     // Store vehicle data
@@ -23,7 +24,7 @@ class VehicleController extends Controller
             'year_manufacture' => 'required|integer',
             'year_registration' => 'required|integer',
             'assign_date' => 'required|date',
-            'vehicle_number' => 'required|string|unique:vehicle_Details',
+            'vehicle_number' => 'required|string|unique:vehicles,vehicle_number',
             'fuel_type' => 'required|string',
             'engine_capacity' => 'required|integer',
             'revenue_license_year' => 'required|integer',
@@ -32,7 +33,7 @@ class VehicleController extends Controller
 
         Vehicle::create($validated);
 
-        return redirect()->route('vehical_Details')->with('success', 'Vehicle saved successfully!');
+        return redirect()->route('vehicle_Details')->with('success', 'Vehicle saved successfully!');
     }
 
     // Update vehicle data
@@ -62,7 +63,7 @@ class VehicleController extends Controller
     public function view()
     {
         $vehicles = Vehicle::all();
-        return view('vehical_veiw', compact('vehicles'));
+        return view('vehical_veiw', compact('vehicles')); // should match your actual filename
     }
 
     // Edit vehicle form
@@ -71,4 +72,11 @@ class VehicleController extends Controller
         $vehicle = Vehicle::findOrFail($id);
         return view('Edit_Vehical', compact('vehicle'));
     }
+
+    public function show($id)
+{
+    $vehicle = Vehicle::findOrFail($id);
+    return view('vehical2_view', compact('vehicle'));
+}
+
 }
