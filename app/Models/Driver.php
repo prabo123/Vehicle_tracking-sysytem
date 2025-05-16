@@ -12,14 +12,14 @@ class Driver extends Model
     protected $fillable = [
         'name',
         'nic',
-        'other_id',
         'license_no',
-        'address',
         'mobile',
+        'address',
         'home_phone',
         'passport',
         'medical_category',
-        'driving_categories',
+        'driving_categories'
     ];
+    
     
 }

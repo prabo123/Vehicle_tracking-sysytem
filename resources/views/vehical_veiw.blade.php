@@ -89,23 +89,18 @@
                 <td>{{ $vehicle->engine_capacity }}</td>
                 <td>{{ $vehicle->revenue_license_year }}</td>
                 <td>{{ $vehicle->security_capacity }}</td>
-                
-               
-
-
-                <td>
+   
+<!-- View Button -->
+<td>
     <div class="d-grid gap-2 d-md-block">
-        <!-- View Button -->
         <a href="{{ route('vehicle.show', $vehicle->id) }}" class="btn btn-sm btn-success">View</a>
     </div>
 </td>
 
 
-
-     
+<!-- Edit Button -->  
     <td>
     <div class="d-grid gap-2 d-md-block">
-        <!-- Edit Button -->
         <a href="{{ route('vehical.edit', $vehicle->id) }}" class="btn btn-sm btn-primary">Edit</a>
     </td>
 

@@ -7,28 +7,31 @@ use App\Models\Driver;
 
 class DriverController extends Controller
 {
-    // Show the driver details form
-    public function create()
+    // Show the driver form
+    public function index()
     {
-        return view('driver_Details'); // resources/views/driver/create.blade.php
+        return view('driver_Details'); // View: resources/views/driver_Details.blade.php
     }
 
     // Store driver data
-
-    
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'nic' => 'required|string|max:12|unique:drivers',
-            'license_number' => 'required|string|max:50',
-            'mobile_number' => 'required|string|max:15',
+            'license_no' => 'required|string|max:50',
+            'mobile' => 'required|string|max:15',
             'address' => 'nullable|string|max:255',
-            'home_number' => 'nullable|string|max:15',
-            'passport_number' => 'nullable|string|max:20',
-            'medical_category' => 'nullable|string|max:50',
-            'driving_categories' => 'nullable|string|max:255', // could be comma-separated list
+            'home_phone' => 'nullable|string|max:15',
+            'passport' => 'nullable|string|max:20',
+            'medical_category' => 'required|string|max:50',
+            'driving_categories' => 'nullable|array',
         ]);
+
+        // Convert driving categories array to comma-separated string
+        $validated['driving_categories'] = isset($validated['driving_categories']) 
+            ? implode(', ', $validated['driving_categories']) 
+            : null;
 
         Driver::create($validated);
 
@@ -37,12 +40,17 @@ class DriverController extends Controller
 
     // View all drivers
     public function view()
-{
-    $drivers = Driver::all();
-    return view('driver_veiw', compact('drivers'));
-}
+    {
+        $drivers = Driver::all();
+        return view('admin.driver_view', compact('drivers')); // View: resources/views/admin/driver_view.blade.php
+    }
 
-    
+    // Show driver edit form
+    public function edit($id)
+    {
+        $driver = Driver::findOrFail($id);
+        return view('driver.edit', compact('driver')); // View: resources/views/driver/edit.blade.php
+    }
 
     // Update driver data
     public function update(Request $request, $id)
@@ -50,14 +58,19 @@ class DriverController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'nic' => 'required|string|max:12',
-            'license_number' => 'required|string|max:50',
-            'mobile_number' => 'required|string|max:15',
+            'license_no' => 'required|string|max:50',
+            'mobile' => 'required|string|max:15',
             'address' => 'nullable|string|max:255',
-            'home_number' => 'nullable|string|max:15',
-            'passport_number' => 'nullable|string|max:20',
-            'medical_category' => 'nullable|string|max:50',
-            'driving_categories' => 'nullable|string|max:255',
+            'home_phone' => 'nullable|string|max:15',
+            'passport' => 'nullable|string|max:20',
+            'medical_category' => 'required|string|max:50',
+            'driving_categories' => 'nullable|array',
         ]);
+
+        // Convert driving categories array to comma-separated string
+        $validated['driving_categories'] = isset($validated['driving_categories']) 
+            ? implode(', ', $validated['driving_categories']) 
+            : null;
 
         $driver = Driver::findOrFail($id);
         $driver->update($validated);
@@ -69,6 +82,6 @@ class DriverController extends Controller
     public function show($id)
     {
         $driver = Driver::findOrFail($id);
-        return view('driver.show', compact('driver')); // resources/views/driver/show.blade.php
+        return view('driver.show', compact('driver')); // View: resources/views/driver/show.blade.php
     }
 }

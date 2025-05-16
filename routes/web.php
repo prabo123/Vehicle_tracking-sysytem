@@ -22,15 +22,10 @@ Route::get('/user/home', function () {
 
 //------------------ Vehicle Routes------------------
 
-// Show vehicle form
-Route::get('/vehical_Details', [VehicleController::class, 'index'])->name('vehical_Details');
 
-// Store vehicle data
-Route::post('/vehical_Details', [VehicleController::class, 'store']);
-
-// View all vehicles
-Route::get('/vehicle/view', [VehicleController::class, 'view'])->name('vehicle.view');
-
+Route::get('/vehical_Details', [VehicleController::class, 'index'])->name('vehical_Details');// Show vehicle form
+Route::post('/vehical_Details', [VehicleController::class, 'store']);// Store vehicle data
+Route::get('/vehicle/view', [VehicleController::class, 'view'])->name('vehicle.view');// View all vehicles
 Route::get('/vehicle-show/{id}', [VehicleController::class, 'show'])->name('vehicle.show');
 
 
@@ -44,24 +39,22 @@ Route::delete('/vehicle/delete/{id}', [VehicleController::class, 'destroy'])->na
 
 //-------------- Driver Routes-------------------------
 
-
-// Show form to create driver
-Route::get('/driver_Details', [DriverController::class, 'create'])->name('driver_Details');
-
+// Show driver form
+Route::get('/driver_Details', [DriverController::class, 'index'])->name('driver_Details');
 // Store driver data
-Route::post('/driver_Details', [DriverController::class, 'store'])->name('driver_Details.store');
-
-// Edit driver form
-Route::get('driver/{driver}/edit', [DriverController::class, 'edit'])->name('driver.edit');
-
-// Update driver
-Route::put('/driver/{driver}', [DriverController::class, 'update'])->name('driver.update');
-
-// Delete driver
-Route::delete('/driver/{driver}', [DriverController::class, 'destroy'])->name('driver.destroy');
-
-// Driver View Route
+Route::post('/driver_Details', [DriverController::class, 'store'])->name('driver.store');
+// View all drivers
 Route::get('/driver/view', [DriverController::class, 'view'])->name('driver.view');
+// Show single driver
+Route::get('/driver/show/{id}', [DriverController::class, 'show'])->name('driver.show');
+// Edit driver form
+Route::get('/driver/edit/{id}', [DriverController::class, 'edit'])->name('driver.edit');
+// Update driver (two versions provided like vehicle routes, pick one preferred or keep both if needed)
+Route::put('/driver/{id}', [DriverController::class, 'update'])->name('driver.update');
+Route::put('/driver/update/{id}', [DriverController::class, 'update'])->name('driver.update');
+// Delete driver
+Route::delete('/driver/delete/{id}', [DriverController::class, 'destroy'])->name('driver.destroy');
+
 
 
 

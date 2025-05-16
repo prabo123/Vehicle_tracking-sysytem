@@ -121,9 +121,10 @@
 
                     <!-- Driver View Link -->
                     <a href="{{ route('driver.view') }}" class="nav_link {{ Request::is('driver/view') ? 'active fw-bold text-white' : '' }}">
-                        <i class="bi bi-person-badge nav_icon"></i>
-                        <span class="nav_name">Driver View</span>
-                    </a>
+    <i class="bi bi-person-badge nav_icon"></i>
+    <span class="nav_name">Driver View</span>
+</a>
+
                 </div>
 
 
