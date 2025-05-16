@@ -37,27 +37,7 @@ class VehicleController extends Controller
     }
 
     // Update vehicle data
-    public function update(Request $request, string $id)
-    {
-        $validated = $request->validate([
-            'vehicle_type' => 'required|string',
-            'vehicle_model' => 'nullable|string',
-            'other_model' => 'nullable|string',
-            'year_manufacture' => 'required|integer',
-            'year_registration' => 'required|integer',
-            'assign_date' => 'required|date',
-            'vehicle_number' => 'required|string',
-            'fuel_type' => 'required|string',
-            'engine_capacity' => 'required|integer',
-            'revenue_license_year' => 'required|integer',
-            'security_capacity' => 'required|integer',
-        ]);
-
-        $vehicle = Vehicle::findOrFail($id);
-        $vehicle->update($validated);
-
-        return redirect()->route('vehicle.view')->with('success', 'Vehicle updated successfully!');
-    }
+   
 
     // View all vehicles
     public function view()
@@ -67,12 +47,21 @@ class VehicleController extends Controller
     }
 
     // Edit vehicle form
-    public function edit($id)
-    {
-        $vehicle = Vehicle::findOrFail($id);
-        return view('Edit_Vehical', compact('vehicle'));
-    }
+    public function update(Request $request, $id)
+{
+    $vehicle = Vehicle::findOrFail($id);
+    $vehicle->update($request->all());
 
+    return redirect()->back()->with('success', 'Vehicle updated successfully!');
+}
+
+public function destroy($id)
+{
+    $vehicle = Vehicle::findOrFail($id);
+    $vehicle->delete();
+
+    return response()->json(['success' => true]);
+}
     public function show($id)
 {
     $vehicle = Vehicle::findOrFail($id);

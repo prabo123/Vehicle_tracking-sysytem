@@ -1,6 +1,12 @@
 <?php
+
+namespace App\Http\Controllers;
 use App\Models\Event;
 use Carbon\Carbon;
+use App\Models\Vehicle;
+use App\Models\Driver;
+
+class DashboardController extends Controller{
 
 public function index()
 {
@@ -18,4 +24,5 @@ public function index()
     });
 
     return view('dashboard', compact('totalVehicles', 'totalDrivers', 'vehicleTypes', 'events'));
+}
 }

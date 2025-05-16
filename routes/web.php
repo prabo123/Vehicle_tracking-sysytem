@@ -27,6 +27,7 @@ Route::get('/vehical_Details', [VehicleController::class, 'index'])->name('vehic
 Route::post('/vehical_Details', [VehicleController::class, 'store']);// Store vehicle data
 Route::get('/vehicle/view', [VehicleController::class, 'view'])->name('vehicle.view');// View all vehicles
 Route::get('/vehicle-show/{id}', [VehicleController::class, 'show'])->name('vehicle.show');
+Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle_Details');
 
 
 // Update vehicle
@@ -34,6 +35,7 @@ Route::put('/vehical/{id}', [VehicleController::class, 'update'])->name('vehical
 Route::get('/vehicle/edit/{id}', [VehicleController::class, 'edit'])->name('vehical.edit');
 Route::put('/vehicle/update/{id}', [VehicleController::class, 'update'])->name('vehical.update');
 Route::delete('/vehicle/delete/{id}', [VehicleController::class, 'destroy'])->name('vehical.destroy');
+Route::resource('vehical', VehicleController::class);
 
 
 
@@ -44,7 +46,7 @@ Route::get('/driver_Details', [DriverController::class, 'index'])->name('driver_
 // Store driver data
 Route::post('/driver_Details', [DriverController::class, 'store'])->name('driver.store');
 // View all drivers
-Route::get('/driver/view', [DriverController::class, 'view'])->name('driver.view');
+Route::get('/driver/', [DriverController::class, 'view'])->name('driver.view');
 // Show single driver
 Route::get('/driver/show/{id}', [DriverController::class, 'show'])->name('driver.show');
 // Edit driver form
@@ -54,6 +56,12 @@ Route::put('/driver/{id}', [DriverController::class, 'update'])->name('driver.up
 Route::put('/driver/update/{id}', [DriverController::class, 'update'])->name('driver.update');
 // Delete driver
 Route::delete('/driver/delete/{id}', [DriverController::class, 'destroy'])->name('driver.destroy');
+
+
+
+
+
+
 
 
 
