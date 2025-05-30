@@ -35,14 +35,14 @@ class DriverController extends Controller
 
         Driver::create($validated);
 
-        return redirect()->route('driver.view')->with('success', 'Driver saved successfully!');
+        return redirect()->route('driver_Details')->with('success', 'Driver saved successfully!');
     }
 
     // View all drivers
     public function view()
     {
         $drivers = Driver::all();
-        return view('admin.driver_view', compact('drivers')); // View: resources/views/admin/driver_view.blade.php
+        return view('driver_view', compact('drivers')); // View: resources/views/admin/driver_view.blade.php
     }
 
     // Show driver edit form
